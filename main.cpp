@@ -1,62 +1,78 @@
-#include <stdio.h>
-#include <math.h>
+#include <iostream>
 #include <locale.h>
+#include <math.h>
 
-typedef struct{
-            float x, y;
-            float r;
-}Circle;
+using namespace std;
 
-void scanCircle(Circle* a)
-{
-    printf("\nВведите координаты центра окр.(x, y):");
-    scanf("%d%d", &a->x, &a->y);
-    printf("\nВведите радиус окр:");
-    scanf("%d", &a->r);
+class Circle{
+    private:
+        float x, y;
+        float r;
+    public:
+        Circle()
+        {
+            x = 0;
+            y = 0;
+            r = 0;
+        }
 
-}
+        ~Circle(){
+        }
+        void scan()
+        {
+            cout << endl << "Введите координаты центра окр.(x, y):";
+            cin >> x >> y;
+            cout << endl << "Введите радиус окр:";
+            cin >> r;
+        }
 
-int lenToCenterOfCircle(Circle a)
-{
-    return sqrt(a.x * a.x + a.y * a.y);
-}
+        void print()
+        {
+            cout << "Итоговая окр:" << endl;
+            cout << "x = " << x << endl;
+            cout << "y = " << y << endl;
+            cout << "r = " << r << endl;
+        }
 
+        float lenToCenterOfCircle()
+        {
+            return sqrt(x * x + y * y);
+        }
 
-Circle addCircles(Circle a, Circle b)
-{
-    a.r = a.r + b.r;
-    a.x = (a.x + b.x) / 2;
-    a.y = (a.y + b.y) / 2;
-    return a;
-}
+        void addCircles(Circle a)
+        {
+            r = r + a.r;
+            x = (x + a.x) / 2;
+            y = (y + a.y) / 2;
+        }
 
+};
 
 int main() {
     setlocale(0, "");
+    cout << "\tВыбирете вариант:\n";
     Circle circle1, circle2;
-    int len;
+    float len;
     int var;
-    printf("\tВыбирете вариант:\n");
-
     char exit = 0;
     while(!exit)
     {
-        printf("1)Найти растояние от центра окр доначала коорд\n");
-        printf("2)Сложить окр(сложение радиусов и средние значения координат аргументов\n");
-        printf("3)Выйти из программы\n");
-        scanf("%d", &var);
+        cout << "1)Найти растояние от центра окр доначала коорд\n";
+        cout << "2)Сложить окр(сложение радиусов и средние значения координат аргументов\n";
+        cout << "3)Выйти из программы\n";
+        cin >> var;
         switch(var){
-            case 1: printf("Введите параметры окружности:\n");
-                    scanCircle(&circle1);
-                    len = lenToCenterOfCircle(circle1);
-                    printf("Расстояние = %d\n", len);
+            case 1: cout << "Введите параметры окружности:" << endl;
+                    circle1.scan();
+                    len = circle1.lenToCenterOfCircle();
+                    cout << "Расстояние = " << len << endl;
                     break;
-            case 2: printf("Введите параметры 1ой окружности:\n");
-                    scanCircle(&circle1);
-                    printf("Введите параметры 2ой окружности:\n");
-                    scanCircle(&circle2);
-                    circle1 = addCircles(circle1, circle2);
-                    printf("Итоговая окр:\nx = %d\ny = %d\nr = %d\n", circle1.x, circle1.y, circle1.r);
+            case 2: cout << "Введите параметры 1ой окружности:" << endl;
+                    circle1.scan();
+                    cout << "Введите параметры 2ой окружности:" << endl;
+                    circle2.scan();
+                    circle1.addCircles(circle2);
+                    circle1.print();
                     break;
             default:exit = 1;
         };
