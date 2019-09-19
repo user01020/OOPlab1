@@ -10,13 +10,13 @@ typedef struct{
 void scanCircle(Circle* a)
 {
     printf("\nВведите координаты центра окр.(x, y):");
-    scanf("%d%d", &a->x, &a->y);
+    scanf("%f%f", &a->x, &a->y);
     printf("\nВведите радиус окр:");
-    scanf("%d", &a->r);
+    scanf("%f", &a->r);
 
 }
 
-int lenToCenterOfCircle(Circle a)
+float lenToCenterOfCircle(Circle a)
 {
     return sqrt(a.x * a.x + a.y * a.y);
 }
@@ -34,14 +34,14 @@ Circle addCircles(Circle a, Circle b)
 int main() {
     setlocale(0, "");
     Circle circle1, circle2;
-    int len;
+    float len;
     int var;
     printf("\tВыбирете вариант:\n");
 
     char exit = 0;
     while(!exit)
     {
-        printf("1)Найти растояние от центра окр доначала коорд\n");
+        printf("1)Найти растояние от центра окр до начала коорд\n");
         printf("2)Сложить окр(сложение радиусов и средние значения координат аргументов\n");
         printf("3)Выйти из программы\n");
         scanf("%d", &var);
@@ -49,14 +49,14 @@ int main() {
             case 1: printf("Введите параметры окружности:\n");
                     scanCircle(&circle1);
                     len = lenToCenterOfCircle(circle1);
-                    printf("Расстояние = %d\n", len);
+                    printf("Расстояние = %g\n", len);
                     break;
             case 2: printf("Введите параметры 1ой окружности:\n");
                     scanCircle(&circle1);
                     printf("Введите параметры 2ой окружности:\n");
                     scanCircle(&circle2);
                     circle1 = addCircles(circle1, circle2);
-                    printf("Итоговая окр:\nx = %d\ny = %d\nr = %d\n", circle1.x, circle1.y, circle1.r);
+                    printf("Итоговая окр:\nx = %g\ny = %g\nr = %g\n", circle1.x, circle1.y, circle1.r);
                     break;
             default:exit = 1;
         };
