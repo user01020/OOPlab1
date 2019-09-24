@@ -3,63 +3,68 @@
 #include <locale.h>
 
 typedef struct{
-            float x, y;
-            float r;
-}Circle;
+           float lenBase, angle;
+}Triangle;
 
-void scanCircle(Circle* a)
+void Init(Triangle a)
 {
-    printf("\nВведите координаты центра окр.(x, y):");
-    scanf("%d%d", &a->x, &a->y);
-    printf("\nВведите радиус окр:");
-    scanf("%d", &a->r);
-
+    a.lenBase = 0;
+    a.angle = 0;
 }
 
-int lenToCenterOfCircle(Circle a)
+void Read(Triangle* a)
 {
-    return sqrt(a.x * a.x + a.y * a.y);
+    printf("Введите длину основания:");
+    scanf("%f", &a->lenBase);
+    printf("Введите угол напротив основания:");
+    scanf("%f", &a->angle);
 }
 
-
-Circle addCircles(Circle a, Circle b)
+void Display(Triangle a)
 {
-    a.r = a.r + b.r;
-    a.x = (a.x + b.x) / 2;
-    a.y = (a.y + b.y) / 2;
+    printf("Длина основания: %g\n", a.lenBase);
+    printf("Угол напротив основания: %g\n", a.angle);
+}
+
+Triangle Add(Triangle a, Triangle b)
+{
+    a.lenBase = a.lenBase + b.lenBase;
+    a.angle = (a.angle + b.angle) / 2;
     return a;
 }
 
+float S(Triangle a)
+{
+    float h = a.lenBase / 2 / tan(a.angle / 2);
+    return a.lenBase * h / 2;
+}
 
-int main() {
+int main()
+{
     setlocale(0, "");
-    Circle circle1, circle2;
-    int len;
-    int var;
-    printf("\tВыбирете вариант:\n");
-
-    char exit = 0;
-    while(!exit)
+    Triangle triangle1, triangle2;
+    Init(triangle1);
+    Init(triangle2);
+    int exit = 0;
+    while(exit == 0)
     {
-        printf("1)Найти растояние от центра окр доначала коорд\n");
-        printf("2)Сложить окр(сложение радиусов и средние значения координат аргументов\n");
-        printf("3)Выйти из программы\n");
+        printf("\tЗадан треугольник (длина основания, угол напротив основания), Имеются функции для работы с данными треугольника(ов).\n");
+        printf("1)Read(Ввод данных треугольника с клавиатуры)\n");
+        printf("2)Display(Вывод данных треугольника на экран)\n");
+        printf("3)Add(сложение двух треугольников)\n");
+        printf("4)S(площадь треугольника)\n");
+        printf("5)Выход\n");
+        int var;
         scanf("%d", &var);
-        switch(var){
-            case 1: printf("Введите параметры окружности:\n");
-                    scanCircle(&circle1);
-                    len = lenToCenterOfCircle(circle1);
-                    printf("Расстояние = %d\n", len);
-                    break;
-            case 2: printf("Введите параметры 1ой окружности:\n");
-                    scanCircle(&circle1);
-                    printf("Введите параметры 2ой окружности:\n");
-                    scanCircle(&circle2);
-                    circle1 = addCircles(circle1, circle2);
-                    printf("Итоговая окр:\nx = %d\ny = %d\nr = %d\n", circle1.x, circle1.y, circle1.r);
-                    break;
+        switch(var)
+        {
+            case 1: Read(&triangle1);                       break;
+            case 2: Display(triangle1);                     break;
+            case 3: Read(&triangle2);
+                    triangle1 = Add(triangle1, triangle2);  break;
+            case 4: printf("S = %f\n", S(triangle1));       break;
             default:exit = 1;
-        };
+        }
     }
     return 0;
 }
