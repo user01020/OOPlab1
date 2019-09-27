@@ -9,16 +9,16 @@ class Circle{
         float x, y;
         float r;
     public:
-        Circle()
+        Circle(float x, float y, float r)
         {
-            x = 0;
-            y = 0;
-            r = 0;
+            this->x = x;
+            this->y = y;
+            this->r = r;
         }
 
         ~Circle(){
         }
-        void scan()
+        void Read()
         {
             cout << endl << "Введите координаты центра окр.(x, y):";
             cin >> x >> y;
@@ -26,53 +26,49 @@ class Circle{
             cin >> r;
         }
 
-        void print()
+        void Display()
         {
-            cout << "Итоговая окр:" << endl;
-            cout << "x = " << x << endl;
-            cout << "y = " << y << endl;
-            cout << "r = " << r << endl;
+            cout << "Координаты центра окружности:"<< endl;
+            cout << "x = " << x << " y = " << y << endl;
+            cout << "Радиус r = " << r << endl;
         }
 
+        void Add(Circle a)
+        {
+            this->r += a.r;
+            this->x = (this->x + a.x) / 2;
+            this->y = (this->y + a.y) / 2;
+        }
         float lenToCenterOfCircle()
         {
             return sqrt(x * x + y * y);
-        }
-
-        void addCircles(Circle a)
-        {
-            r = r + a.r;
-            x = (x + a.x) / 2;
-            y = (y + a.y) / 2;
         }
 
 };
 
 int main() {
     setlocale(0, "");
-    cout << "\tВыбирете вариант:\n";
-    Circle circle1, circle2;
-    float len;
+    Circle circle1(0, 0, 0), circle2(0, 0, 0);
     int var;
     char exit = 0;
-    while(!exit)
-    {
-        cout << "1)Найти растояние от центра окр доначала коорд\n";
-        cout << "2)Сложить окр(сложение радиусов и средние значения координат аргументов\n";
-        cout << "3)Выйти из программы\n";
+    while(exit == 0)
+    {   cout << "\tЗадана окружность с координатами центра (x, y) и радиусом основания r.Имются функции для работы с данными этой фигуры:" << endl;
+        cout << "1)Read(Ввод данных треугольника с клавиатуры)" << endl;
+        cout << "2)Display(Вывод данных треугольника на экран)" << endl;
+        cout << "3)Add(сложение двух фигур. результат первая фигура)" << endl;
+        cout << "4)Расстояние от начала системы координат до центра окружности" << endl;
+        cout << "5)Выход" << endl;
         cin >> var;
         switch(var){
-            case 1: cout << "Введите параметры окружности:" << endl;
-                    circle1.scan();
-                    len = circle1.lenToCenterOfCircle();
-                    cout << "Расстояние = " << len << endl;
+            case 1: circle1.Read();
                     break;
-            case 2: cout << "Введите параметры 1ой окружности:" << endl;
-                    circle1.scan();
-                    cout << "Введите параметры 2ой окружности:" << endl;
-                    circle2.scan();
-                    circle1.addCircles(circle2);
-                    circle1.print();
+            case 2: circle1.Display();
+                    break;
+            case 3: cout << "\tВведите данные второго треугольника" << endl;
+                    circle2.Read();
+                    circle1.Add(circle2);
+                    break;
+            case 4: cout << "Расстояние от начала системы координат до центра окружности = " << circle1.lenToCenterOfCircle() << endl;
                     break;
             default:exit = 1;
         };
