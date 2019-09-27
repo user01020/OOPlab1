@@ -7,56 +7,67 @@ typedef struct{
             float r;
 }Circle;
 
-void scanCircle(Circle* a)
+Circle Init(Circle a, float x, float y, float r)
+{
+    a.x = x;
+    a.y = y;
+    a.r = r;
+    return a;
+}
+
+Circle Read(Circle a)
 {
     printf("\nВведите координаты центра окр.(x, y):");
-    scanf("%f%f", &a->x, &a->y);
+    scanf("%f%f", &a.x, &a.y);
     printf("\nВведите радиус окр:");
-    scanf("%f", &a->r);
-
+    scanf("%f", &a.r);
+    return a;
 }
 
-float lenToCenterOfCircle(Circle a)
+void Display(Circle a)
 {
-    return sqrt(a.x * a.x + a.y * a.y);
+    printf("Координаты центра окр:\nx = %g, y = %g\n", a.x, a.y);
+    printf("Радиус окружности r = %g\n", a.r);
 }
 
-
-Circle addCircles(Circle a, Circle b)
+Circle Add(Circle a, Circle b)
 {
     a.r = a.r + b.r;
     a.x = (a.x + b.x) / 2;
     a.y = (a.y + b.y) / 2;
     return a;
 }
-
+float lenToCenterOfCircle(Circle a)
+{
+    return sqrt(a.x * a.x + a.y * a.y);
+}
 
 int main() {
     setlocale(0, "");
     Circle circle1, circle2;
-    float len;
+    circle1 = Init(circle1, 0, 0, 0);
+    circle2 = Init(circle2, 0, 0, 0);
     int var;
-    printf("\tВыбирете вариант:\n");
-
     char exit = 0;
-    while(!exit)
+    while(exit == 0)
     {
-        printf("1)Найти растояние от центра окр до начала коорд\n");
-        printf("2)Сложить окр(сложение радиусов и средние значения координат аргументов\n");
-        printf("3)Выйти из программы\n");
+        printf("\tЗадана окружность с координатами центра (x, y) и радиусом r. Имеются функции для работы с данными этой фигуры:\n");
+        printf("1)Read(Ввод данных фигуры с клавиатуры)\n");
+        printf("2)Display(Вывод данных фигуры на экран)\n");
+        printf("3)Add(сложение двух фигур. результат первая фигура)\n");
+        printf("4)Растояние от начала координат до центра окружности.\n");
+        printf("5)Выход\n");
         scanf("%d", &var);
         switch(var){
-            case 1: printf("Введите параметры окружности:\n");
-                    scanCircle(&circle1);
-                    len = lenToCenterOfCircle(circle1);
-                    printf("Расстояние = %g\n", len);
+            case 1: circle1 = Read(circle1);
                     break;
-            case 2: printf("Введите параметры 1ой окружности:\n");
-                    scanCircle(&circle1);
-                    printf("Введите параметры 2ой окружности:\n");
-                    scanCircle(&circle2);
-                    circle1 = addCircles(circle1, circle2);
-                    printf("Итоговая окр:\nx = %g\ny = %g\nr = %g\n", circle1.x, circle1.y, circle1.r);
+            case 2: Display(circle1);
+                    break;
+            case 3: printf("\tВведите данные второй фигуры\n");
+                    circle2 = Read(circle2);
+                    circle1 = Add(circle1, circle2);
+                    break;
+            case 4: printf("Растояние от начала координат до центра окружности = %f\n", lenToCenterOfCircle(circle1));
                     break;
             default:exit = 1;
         };
