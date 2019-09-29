@@ -36,6 +36,8 @@ class Triangle{
         }
         float S()
         {
+            if(this->angle == 0)
+                return 0;
             float h = this->lenBase / 2 / tan(this->angle / 2);
             return (this->lenBase * h / 2);
         }
