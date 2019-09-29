@@ -38,6 +38,8 @@ Triangle Add(Triangle a, Triangle b)
 float S(Triangle a)
 {
     float h;
+    if(a.angle == 0)
+        return 0;
     h = a.lenBase / 2 / tan(a.angle / 2);
     return (a.lenBase * h / 2);
 }
