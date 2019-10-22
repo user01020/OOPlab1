@@ -1,6 +1,7 @@
-#include <iostream>
+#include <math.h>
 #include <locale.h>
 #include <math.h>
+#include <iostream>
 
 /*
 Разработать тип данных и набор процедур для работы с ним (не использовать конструкции ООП, желательно использовать язык С, использовать Git).
@@ -21,80 +22,74 @@
 */
 
 /*
-Класс circle представляет собой окружность на плоскости и содержит 3 вещественных поля: координаты и радиус.
-Реализовать методы , вычисляющий расстояние от  центра окружности до начала координат,  и “складывающий” две окружности.
-В итоговой окружности радиусы складываются, а в качестве координат центра вычисляются средние значения координат аргументов.
+Класс Triangle представляет собой треугольник на плоскости и содержит 2 вещественных поля: длина основания и угол напротив основания.
+Реализовать методы , вычисляющий площадь треугольника,  и “складывающий” две треугольника.
+В итоговой окружности длины оснований складываются, а в качестве итогового угла вычисляются средние значения углов двух треугольников.
 */
 
 using namespace std;
 
-class Circle{
+class Triangle{
     private:
-        float x, y;
-        float r;
+        float lenBase;
+        float angle;
     public:
-        Circle(float x, float y, float r)
+        Triangle(float Base, float Angle)
         {
-            this->x = x;
-            this->y = y;
-            this->r = r;
+            lenBase = Base;
+            angle = Angle;
         }
-
-        ~Circle(){
-        }
+        ~Triangle(){}
         void Read()
         {
-            cout << endl << "Введите координаты центра окр.(x, y):";
-            cin >> x >> y;
-            cout << endl << "Введите радиус окр:";
-            cin >> r;
+            cout << "Введите длину основания:";
+            cin >> this->lenBase;
+            cout << "Введите угол напротив основания:";
+            cin >> this->angle;
         }
-
         void Display()
         {
-            cout << "Координаты центра окружности:"<< endl;
-            cout << "x = " << x << " y = " << y << endl;
-            cout << "Радиус r = " << r << endl;
+            cout << "Длина основания:" << this->lenBase << endl;
+            cout << "Угол напротив основания:" << this->angle << endl;
         }
-
-        void Add(Circle a)
+        void Add(Triangle a)
         {
-            this->r += a.r;
-            this->x = (this->x + a.x) / 2;
-            this->y = (this->y + a.y) / 2;
+            this->lenBase = this->lenBase + a.lenBase;
+            this->angle = (this->angle + a.angle) / 2;
         }
-        float lenToCenterOfCircle()
+        float S()
         {
-            return sqrt(x * x + y * y);
+            if(this->angle == 0)
+                return 0;
+            float h = this->lenBase / 2 / tan(this->angle / 2);
+            return (this->lenBase * h / 2);
         }
-
 };
 
 int main()
 {
     setlocale(0, "");
-    Circle circle1(0, 0, 0), circle2(0, 0, 0);
-    int var;
-    char exit = 0;
+    Triangle triangle1(0, 0), triangle2(0, 0);
+    int exit = 0;
     while(exit == 0)
-    {   cout << "\tЗадана окружность с координатами центра (x, y) и радиусом основания r.Имются функции для работы с данными этой фигуры:" << endl;
+    {
+        cout << "\tЗадан треугольник (длина основания, угол напротив основания), Имеются функции для работы с данными треугольника(ов)." << endl;
         cout << "1)Read(Ввод данных треугольника с клавиатуры)" << endl;
         cout << "2)Display(Вывод данных треугольника на экран)" << endl;
-        cout << "3)Add(сложение двух фигур. результат первая фигура)" << endl;
-        cout << "4)Расстояние от начала системы координат до центра окружности" << endl;
+        cout << "3)Add(сложение двух треугольников. результат в переменные первого треугольника)" << endl;
+        cout << "4)S(площадь треугольника)" << endl;
         cout << "5)Выход" << endl;
+        int var;
         cin >> var;
-        switch(var){
-            case 1: circle1.Read();
-                    break;
-            case 2: circle1.Display();
-                    break;
-            case 3: cout << "\tВведите данные второго треугольника" << endl;
-                    circle2.Read();
-                    circle1.Add(circle2);
-                    break;
-            case 4: cout << "Расстояние от начала системы координат до центра окружности = " << circle1.lenToCenterOfCircle() << endl;
-                    break;
+        switch(var)
+        {
+            case 1: triangle1.Read();               break;
+            case 2: triangle1.Display();            break;
+            case 3: cout << "\tВведите данные второго треугольника\n";
+                    triangle2.Read();
+                    triangle1.Add(triangle2);       break;
+            case 4: cout << "S = " << triangle1.S() << endl;
+                                                    break;
             default:exit = 1;
         }
     }
