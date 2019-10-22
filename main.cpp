@@ -16,80 +16,80 @@
 */
 
 /*
-Класс circle представляет собой окружность на плоскости и содержит 3 вещественных поля: координаты и радиус.
-Реализовать методы , вычисляющий расстояние от  центра окружности до начала координат,  и “складывающий” две окружности.
-В итоговой окружности радиусы складываются, а в качестве координат центра вычисляются средние значения координат аргументов.
+Класс Triangle представляет собой треугольник на плоскости и содержит 2 вещественных поля: длина основания и угол напротив основания.
+Реализовать методы , вычисляющий площадь треугольника,  и “складывающий” две треугольника.
+В итоговой окружности длины оснований складываются, а в качестве итогового угла вычисляются средние значения углов двух треугольников.
 */
 
 typedef struct{
-            float x, y;
-            float r;
-}Circle;
+           float lenBase, angle;
+}Triangle;
 
-Circle Init(Circle a, float x, float y, float r)
+Triangle Init(Triangle a, float Base, float Angle)
 {
-    a.x = x;
-    a.y = y;
-    a.r = r;
+    a.lenBase = Base;
+    a.angle = Angle;
     return a;
 }
 
-Circle Read(Circle a)
+Triangle Read(Triangle a)
 {
-    printf("\nВведите координаты центра окр.(x, y):");
-    scanf("%f%f", &a.x, &a.y);
-    printf("\nВведите радиус окр:");
-    scanf("%f", &a.r);
+    printf("Введите длину основания:");
+    scanf("%f", &a.lenBase);
+    printf("Введите угол напротив основания:");
+    scanf("%f", &a.angle);
     return a;
 }
 
-void Display(Circle a)
+void Display(Triangle a)
 {
-    printf("Координаты центра окр:\nx = %g, y = %g\n", a.x, a.y);
-    printf("Радиус окружности r = %g\n", a.r);
+    printf("Длина основания: %g\n", a.lenBase);
+    printf("Угол напротив основания: %g\n", a.angle);
 }
 
-Circle Add(Circle a, Circle b)
+Triangle Add(Triangle a, Triangle b)
 {
-    a.r = a.r + b.r;
-    a.x = (a.x + b.x) / 2;
-    a.y = (a.y + b.y) / 2;
+    a.lenBase = a.lenBase + b.lenBase;
+    a.angle = (a.angle + b.angle) / 2;
     return a;
 }
-float lenToCenterOfCircle(Circle a)
+
+float S(Triangle a)
 {
-    return sqrt(a.x * a.x + a.y * a.y);
+    float h;
+    if(a.angle == 0)
+        return 0;
+    h = a.lenBase / 2 / tan(a.angle / 2);
+    return (a.lenBase * h / 2);
 }
 
-int main() {
+int main()
+{
     setlocale(0, "");
-    Circle circle1, circle2;
-    circle1 = Init(circle1, 0, 0, 0);
-    circle2 = Init(circle2, 0, 0, 0);
-    int var;
-    char exit = 0;
+    Triangle triangle1, triangle2;
+    triangle1 = Init(triangle1, 0, 0);
+    triangle2 = Init(triangle2, 0, 0);
+    int exit = 0;
     while(exit == 0)
     {
-        printf("\tЗадана окружность с координатами центра (x, y) и радиусом r. Имеются функции для работы с данными этой фигуры:\n");
-        printf("1)Read(Ввод данных фигуры с клавиатуры)\n");
-        printf("2)Display(Вывод данных фигуры на экран)\n");
-        printf("3)Add(сложение двух фигур. результат первая фигура)\n");
-        printf("4)Растояние от начала координат до центра окружности.\n");
+        printf("\tЗадан треугольник (длина основания, угол напротив основания), Имеются функции для работы с данными треугольника(ов).\n");
+        printf("1)Read(Ввод данных треугольника с клавиатуры)\n");
+        printf("2)Display(Вывод данных треугольника на экран)\n");
+        printf("3)Add(сложение двух треугольников. результат в переменные первого треугольника)\n");
+        printf("4)S(площадь треугольника)\n");
         printf("5)Выход\n");
+        int var;
         scanf("%d", &var);
-        switch(var){
-            case 1: circle1 = Read(circle1);
-                    break;
-            case 2: Display(circle1);
-                    break;
-            case 3: printf("\tВведите данные второй фигуры\n");
-                    circle2 = Read(circle2);
-                    circle1 = Add(circle1, circle2);
-                    break;
-            case 4: printf("Растояние от начала координат до центра окружности = %f\n", lenToCenterOfCircle(circle1));
-                    break;
+        switch(var)
+        {
+            case 1: triangle1 = Read(triangle1);            break;
+            case 2: Display(triangle1);                     break;
+            case 3: printf("\tВведите данные второго треугольника\n");
+                    triangle2 = Read(triangle2);
+                    triangle1 = Add(triangle1, triangle2);  break;
+            case 4: printf("S = %g\n", S(triangle1));       break;
             default:exit = 1;
-        };
+        }
     }
     return 0;
 }
