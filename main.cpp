@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <math.h>
+#include <iostream>
 #include <locale.h>
+#include <math.h>
 
 /*
 Разработать тип данных и набор процедур для работы с ним (не использовать конструкции ООП, желательно использовать язык С, использовать Git).
@@ -13,81 +13,88 @@
 5) Процедура по вашему варианту задания.
 В main продемонстрировать работу с переменными данного типа.
 
+Переделать задание 2 и 3 в стиле ООП (Использовать Git).
+
+Процедуры Init, Read, Display, Add и по варианту, становятся методами класса.
+Поля становятся закрытыми private, доступ к ним при необходимости осуществляется через открытые методы public.
+
 */
 
 /*
-Класс Triangle представляет собой треугольник на плоскости и содержит 2 вещественных поля: длина основания и угол напротив основания.
-Реализовать методы , вычисляющий площадь треугольника,  и “складывающий” две треугольника.
-В итоговой окружности длины оснований складываются, а в качестве итогового угла вычисляются средние значения углов двух треугольников.
+Класс circle представляет собой окружность на плоскости и содержит 3 вещественных поля: координаты и радиус.
+Реализовать методы , вычисляющий расстояние от  центра окружности до начала координат,  и “складывающий” две окружности.
+В итоговой окружности радиусы складываются, а в качестве координат центра вычисляются средние значения координат аргументов.
 */
 
-typedef struct{
-           float lenBase, angle;
-}Triangle;
+using namespace std;
 
-Triangle Init(Triangle a, float Base, float Angle)
-{
-    a.lenBase = Base;
-    a.angle = Angle;
-    return a;
-}
+class Circle{
+    private:
+        float x, y;
+        float r;
+    public:
+        Circle(float x, float y, float r)
+        {
+            this->x = x;
+            this->y = y;
+            this->r = r;
+        }
 
-Triangle Read(Triangle a)
-{
-    printf("Введите длину основания:");
-    scanf("%f", &a.lenBase);
-    printf("Введите угол напротив основания:");
-    scanf("%f", &a.angle);
-    return a;
-}
+        ~Circle(){
+        }
+        void Read()
+        {
+            cout << endl << "Введите координаты центра окр.(x, y):";
+            cin >> x >> y;
+            cout << endl << "Введите радиус окр:";
+            cin >> r;
+        }
 
-void Display(Triangle a)
-{
-    printf("Длина основания: %g\n", a.lenBase);
-    printf("Угол напротив основания: %g\n", a.angle);
-}
+        void Display()
+        {
+            cout << "Координаты центра окружности:"<< endl;
+            cout << "x = " << x << " y = " << y << endl;
+            cout << "Радиус r = " << r << endl;
+        }
 
-Triangle Add(Triangle a, Triangle b)
-{
-    a.lenBase = a.lenBase + b.lenBase;
-    a.angle = (a.angle + b.angle) / 2;
-    return a;
-}
+        void Add(Circle a)
+        {
+            this->r += a.r;
+            this->x = (this->x + a.x) / 2;
+            this->y = (this->y + a.y) / 2;
+        }
+        float lenToCenterOfCircle()
+        {
+            return sqrt(x * x + y * y);
+        }
 
-float S(Triangle a)
-{
-    float h;
-    if(a.angle == 0)
-        return 0;
-    h = a.lenBase / 2 / tan(a.angle / 2);
-    return (a.lenBase * h / 2);
-}
+};
 
 int main()
 {
     setlocale(0, "");
-    Triangle triangle1, triangle2;
-    triangle1 = Init(triangle1, 0, 0);
-    triangle2 = Init(triangle2, 0, 0);
-    int exit = 0;
+    Circle circle1(0, 0, 0), circle2(0, 0, 0);
+    int var;
+    char exit = 0;
     while(exit == 0)
-    {
-        printf("\tЗадан треугольник (длина основания, угол напротив основания), Имеются функции для работы с данными треугольника(ов).\n");
-        printf("1)Read(Ввод данных треугольника с клавиатуры)\n");
-        printf("2)Display(Вывод данных треугольника на экран)\n");
-        printf("3)Add(сложение двух треугольников. результат в переменные первого треугольника)\n");
-        printf("4)S(площадь треугольника)\n");
-        printf("5)Выход\n");
-        int var;
-        scanf("%d", &var);
-        switch(var)
-        {
-            case 1: triangle1 = Read(triangle1);            break;
-            case 2: Display(triangle1);                     break;
-            case 3: printf("\tВведите данные второго треугольника\n");
-                    triangle2 = Read(triangle2);
-                    triangle1 = Add(triangle1, triangle2);  break;
-            case 4: printf("S = %g\n", S(triangle1));       break;
+    {   cout << "\tЗадана окружность с координатами центра (x, y) и радиусом основания r.Имются функции для работы с данными этой фигуры:" << endl;
+        cout << "1)Read(Ввод данных треугольника с клавиатуры)" << endl;
+        cout << "2)Display(Вывод данных треугольника на экран)" << endl;
+        cout << "3)Add(сложение двух фигур. результат первая фигура)" << endl;
+        cout << "4)Расстояние от начала системы координат до центра окружности" << endl;
+        cout << "5)Выход" << endl;
+        cin >> var;
+        switch(var){
+            case 1: circle1.Read();
+                    break;
+            case 2: circle1.Display();
+                    break;
+            case 3: cout << "\tВведите данные второго треугольника" << endl;
+                    circle2.Read();
+                    circle1.Add(circle2);
+                    break;
+            case 4: cout << "Расстояние от начала системы координат до центра окружности = " << circle1.lenToCenterOfCircle() << endl;
+                    break;
             default:exit = 1;
         }
     }
