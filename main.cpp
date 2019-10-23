@@ -1,7 +1,6 @@
-#include <math.h>
-#include <locale.h>
-
 #include <iostream>
+#include <locale.h>
+#include "Triangle.h"
 
 /*
 Разработать тип данных и набор процедур для работы с ним (не использовать конструкции ООП, желательно использовать язык С, использовать Git).
@@ -29,42 +28,6 @@
 
 using namespace std;
 
-class Triangle{
-    private:
-        float lenBase;
-        float angle;
-    public:
-        Triangle(float Base, float Angle)
-        {
-            lenBase = Base;
-            angle = Angle;
-        }
-        ~Triangle(){}
-        void Read()
-        {
-            cout << "Введите длину основания:";
-            cin >> this->lenBase;
-            cout << "Введите угол напротив основания:";
-            cin >> this->angle;
-        }
-        void Display()
-        {
-            cout << "Длина основания:" << this->lenBase << endl;
-            cout << "Угол напротив основания:" << this->angle << endl;
-        }
-        void Add(Triangle a)
-        {
-            this->lenBase = this->lenBase + a.lenBase;
-            this->angle = (this->angle + a.angle) / 2;
-        }
-        float S()
-        {
-            if(this->angle == 0)
-                return 0;
-            float h = this->lenBase / 2 / tan(this->angle / 2);
-            return (this->lenBase * h / 2);
-        }
-};
 
 int main()
 {
