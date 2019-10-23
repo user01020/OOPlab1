@@ -1,7 +1,6 @@
 #include <iostream>
 #include <locale.h>
-#include <math.h>
-
+#include "Circle.h"
 /*
 Разработать тип данных и набор процедур для работы с ним (не использовать конструкции ООП, желательно использовать язык С, использовать Git).
 
@@ -28,51 +27,9 @@
 
 using namespace std;
 
-class Circle{
-    private:
-        float x, y;
-        float r;
-    public:
-        Circle(float x, float y, float r)
-        {
-            this->x = x;
-            this->y = y;
-            this->r = r;
-        }
-
-        ~Circle(){
-        }
-        void Read()
-        {
-            cout << endl << "Введите координаты центра окр.(x, y):";
-            cin >> x >> y;
-            cout << endl << "Введите радиус окр:";
-            cin >> r;
-        }
-
-        void Display()
-        {
-            cout << "Координаты центра окружности:"<< endl;
-            cout << "x = " << x << " y = " << y << endl;
-            cout << "Радиус r = " << r << endl;
-        }
-
-        void Add(Circle a)
-        {
-            this->r += a.r;
-            this->x = (this->x + a.x) / 2;
-            this->y = (this->y + a.y) / 2;
-        }
-        float lenToCenterOfCircle()
-        {
-            return sqrt(x * x + y * y);
-        }
-
-};
-
 int main() {
     setlocale(0, "");
-    Circle circle1(0, 0, 0), circle2(0, 0, 0);
+    Circle circle1, circle2;
     int var;
     char exit = 0;
     while(exit == 0)
