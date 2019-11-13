@@ -9,8 +9,13 @@
 */
 using namespace std;
 
+Circle::Circle()
+{
+    cout << "constructor without par" << endl;
+}
 Circle::Circle(float x, float y, float r)
         {
+            cout << "constructor with par" << endl;
             this->x = x;
             this->y = y;
             this->r = r;
@@ -30,11 +35,14 @@ void Circle::Display()
     cout << "Радиус r = " << r << endl;
 }
 
-void Circle::Add(Circle a)
+Circle Circle::operator+(Circle a)
 {
-    this->r += a.r;
-    this->x = (this->x + a.x) / 2;
-    this->y = (this->y + a.y) / 2;
+    Circle res((this->x + a.x) / 2, (this->y + a.y) / 2, this->r + a.r);
+    return res;
+}
+Circle Circle::operator+=(Circle a)
+{
+    return *this = *this + a;
 }
 float Circle::lenToCenterOfCircle()
 {

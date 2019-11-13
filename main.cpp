@@ -29,30 +29,29 @@ using namespace std;
 
 int main() {
     setlocale(0, "");
-    Circle circle1, circle2;
-    int var;
-    char exit = 0;
-    while(exit == 0)
-    {   cout << "\tЗадана окружность с координатами центра (x, y) и радиусом основания r.Имются функции для работы с данными этой фигуры:" << endl;
-        cout << "1)Read(Ввод данных треугольника с клавиатуры)" << endl;
-        cout << "2)Display(Вывод данных треугольника на экран)" << endl;
-        cout << "3)Add(сложение двух фигур. результат первая фигура)" << endl;
-        cout << "4)Расстояние от начала системы координат до центра окружности" << endl;
-        cout << "5)Выход" << endl;
-        cin >> var;
-        switch(var){
-            case 1: circle1.Read();
-                    break;
-            case 2: circle1.Display();
-                    break;
-            case 3: cout << "\tВведите данные второго треугольника" << endl;
-                    circle2.Read();
-                    circle1.Add(circle2);
-                    break;
-            case 4: cout << "Расстояние от начала системы координат до центра окружности = " << circle1.lenToCenterOfCircle() << endl;
-                    break;
-            default:exit = 1;
-        };
-    }
+    Circle circle1(2, 3, 4);
+    Circle circle2;
+    cout << "\tcircle 1:\n";
+    circle1.Display();
+    cout << "\tcircle 2:\n";
+    circle2.Display();
+    cout << "\tinput circle 1:\n";
+    circle1.Read();
+    cout << "\tinput circle 2:\n";
+    circle2.Read();
+
+    cout << "\tcircle 1:\n";
+    circle1.Display();
+    cout << "\tcircle 2:\n";
+    circle2.Display();
+
+    cout << "\tcircle1 + circle2:\n";
+    (circle1 + circle2).Display();
+    cout << "\tcircle1 += circle2;\n";
+    circle1 += circle2;
+    cout << "\tcircle1:\n";
+    circle1.Display();
+    float len = circle1.lenToCenterOfCircle();
+    cout << "\tcircle1.lenToCenterOfCircle() = " << len << endl;
     return 0;
 }
