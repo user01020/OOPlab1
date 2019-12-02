@@ -22,9 +22,9 @@ Circle::Circle(float x, float y, float r)
         }
 void Circle::Read()
 {
-    cout << endl << "Введите координаты центра окр.(x, y):";
+    cout << "Введите координаты центра окр.(x, y):";
     cin >> x >> y;
-    cout << endl << "Введите радиус окр:";
+    cout << "Введите радиус окр:";
     cin >> r;
 }
 
@@ -34,16 +34,20 @@ void Circle::Display()
     cout << "x = " << x << " y = " << y << endl;
     cout << "Радиус r = " << r << endl;
 }
+Circle Circle::operator+=(Circle a)
+{
+    this->x = (this->x + a.x) / 2;
+    this->y = (this->y + a.y) / 2;
+    this->r += a.r;
+    return *this;
+}
 
 Circle Circle::operator+(Circle a)
 {
-    Circle res((this->x + a.x) / 2, (this->y + a.y) / 2, this->r + a.r);
-    return res;
+    Circle res = *this;
+    return res += a;
 }
-Circle Circle::operator+=(Circle a)
-{
-    return *this = *this + a;
-}
+
 float Circle::lenToCenterOfCircle()
 {
     return sqrt(x * x + y * y);
