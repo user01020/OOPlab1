@@ -32,7 +32,7 @@ using namespace std;
 int main()
 {
     setlocale(0, "");
-    Triangle triangle1(0, 0), triangle2(0, 0);
+    /*Triangle triangle1(0, 0), triangle2(0, 0);
     int exit = 0;
     while(exit == 0)
     {
@@ -55,6 +55,21 @@ int main()
                                                     break;
             default:exit = 1;
         }
-    }
+    }*/
+    Triangle triangle1(4, 60), triangle2;
+    cout << "\ttriangle1:\n";       triangle1.Display();
+    cout << "\ttriangle2:\n";       triangle2.Display();
+
+    cout << "\tinput triangle1:\n"; triangle1.Read();
+    cout << "\tinput triangle2:\n"; triangle2.Read();
+
+    cout << "\ttriangle1:\n";       triangle1.Display();
+    cout << "\ttriangle2:\n";       triangle2.Display();
+
+    cout << "\ttriangle1 + triangle2:\n";   (triangle1 + triangle2).Display();
+    cout << "\ttriangle1 += triangle2;\n";  triangle1 += triangle2;
+    cout << "\ttriangle1:\n";       triangle1.Display();
+    float S = triangle1.S();
+    cout << "\ttriangle1.S() = " << S << endl;
     return 0;
 }

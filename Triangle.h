@@ -11,12 +11,14 @@ class Triangle{
         float lenBase = 0;
         float angle = 0;
     public:
-        Triangle() {};
+        Triangle();
         Triangle(float Base, float Angle);
         ~Triangle(){};
         void Read();
         void Display();
         void Add(Triangle a);
+        Triangle operator+(Triangle a);
+        Triangle operator+=(Triangle a);
         float S();
 };
 #endif  TRIANGLE_H_INCLUDED

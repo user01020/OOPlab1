@@ -8,8 +8,13 @@
 */
 using namespace std;
 
+Triangle::Triangle()
+{
+    cout << "constructor without par" << endl;
+}
 Triangle::Triangle(float Base, float Angle)
 {
+    cout << "constructor with par" << endl;
     lenBase = Base;
     angle = Angle;
 }
@@ -25,10 +30,16 @@ void Triangle::Display()
     cout << "Длина основания:" << this->lenBase << endl;
     cout << "Угол напротив основания:" << this->angle << endl;
 }
-void Triangle::Add(Triangle a)
+Triangle Triangle::operator+=(Triangle a)
 {
-    this->lenBase = this->lenBase + a.lenBase;
+    this->lenBase += a.lenBase;
     this->angle = (this->angle + a.angle) / 2;
+    return *this;
+}
+Triangle Triangle::operator+(Triangle a)
+{
+    Triangle res = *this;
+    return res += a;
 }
 float Triangle::S()
 {
