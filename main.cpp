@@ -1,7 +1,7 @@
-#include <math.h>
-#include <locale.h>
-#include <math.h>
 #include <iostream>
+#include <locale.h>
+#include "Circle.h"
+#include "Triangle.h"
 
 /*
 Разработать тип данных и набор процедур для работы с ним (не использовать конструкции ООП, желательно использовать язык С, использовать Git).
@@ -22,6 +22,10 @@
 */
 
 /*
+Класс circle представляет собой окружность на плоскости и содержит 3 вещественных поля: координаты и радиус.
+Реализовать методы , вычисляющий расстояние от  центра окружности до начала координат,  и “складывающий” две окружности.
+В итоговой окружности радиусы складываются, а в качестве координат центра вычисляются средние значения координат аргументов.
+
 Класс Triangle представляет собой треугольник на плоскости и содержит 2 вещественных поля: длина основания и угол напротив основания.
 Реализовать методы , вычисляющий площадь треугольника,  и “складывающий” две треугольника.
 В итоговой окружности длины оснований складываются, а в качестве итогового угла вычисляются средние значения углов двух треугольников.
@@ -29,69 +33,40 @@
 
 using namespace std;
 
-class Triangle{
-    private:
-        float lenBase;
-        float angle;
-    public:
-        Triangle(float Base, float Angle)
-        {
-            lenBase = Base;
-            angle = Angle;
-        }
-        ~Triangle(){}
-        void Read()
-        {
-            cout << "Введите длину основания:";
-            cin >> this->lenBase;
-            cout << "Введите угол напротив основания:";
-            cin >> this->angle;
-        }
-        void Display()
-        {
-            cout << "Длина основания:" << this->lenBase << endl;
-            cout << "Угол напротив основания:" << this->angle << endl;
-        }
-        void Add(Triangle a)
-        {
-            this->lenBase = this->lenBase + a.lenBase;
-            this->angle = (this->angle + a.angle) / 2;
-        }
-        float S()
-        {
-            if(this->angle == 0)
-                return 0;
-            float h = this->lenBase / 2 / tan(this->angle / 2);
-            return (this->lenBase * h / 2);
-        }
-};
-
-int main()
-{
+int main() {
     setlocale(0, "");
-    Triangle triangle1(0, 0), triangle2(0, 0);
-    int exit = 0;
-    while(exit == 0)
-    {
-        cout << "\tЗадан треугольник (длина основания, угол напротив основания), Имеются функции для работы с данными треугольника(ов)." << endl;
-        cout << "1)Read(Ввод данных треугольника с клавиатуры)" << endl;
-        cout << "2)Display(Вывод данных треугольника на экран)" << endl;
-        cout << "3)Add(сложение двух треугольников. результат в переменные первого треугольника)" << endl;
-        cout << "4)S(площадь треугольника)" << endl;
-        cout << "5)Выход" << endl;
-        int var;
-        cin >> var;
-        switch(var)
-        {
-            case 1: triangle1.Read();               break;
-            case 2: triangle1.Display();            break;
-            case 3: cout << "\tВведите данные второго треугольника\n";
-                    triangle2.Read();
-                    triangle1.Add(triangle2);       break;
-            case 4: cout << "S = " << triangle1.S() << endl;
-                                                    break;
-            default:exit = 1;
-        }
-    }
+
+    cout << "\t\tDemonstration class Circle:\n";
+    Circle circle1(2, 3, 4), circle2;
+    cout << "\tcircle 1:\n";        circle1.Display();
+    cout << "\tcircle 2:\n";        circle2.Display();
+    cout << "\tinput circle 1:\n";  circle1.Read();
+    cout << "\tinput circle 2:\n";  circle2.Read();
+
+    cout << "\tcircle 1:\n";        circle1.Display();
+    cout << "\tcircle 2:\n";        circle2.Display();
+
+    cout << "\tcircle1 + circle2:\n";   (circle1 + circle2).Display();
+    cout << "\tcircle1 += circle2;\n";  circle1 += circle2;
+    cout << "\tcircle1:\n";         circle1.Display();
+    float len = circle1.lenToCenterOfCircle();
+    cout << "\tcircle1.lenToCenterOfCircle() = " << len << endl;
+
+    cout << "\t\tDemonstration class Triangle:\n";
+    Triangle triangle1(4, 60), triangle2;
+    cout << "\ttriangle1:\n";       triangle1.Display();
+    cout << "\ttriangle2:\n";       triangle2.Display();
+
+    cout << "\tinput triangle1:\n"; triangle1.Read();
+    cout << "\tinput triangle2:\n"; triangle2.Read();
+
+    cout << "\ttriangle1:\n";       triangle1.Display();
+    cout << "\ttriangle2:\n";       triangle2.Display();
+
+    cout << "\ttriangle1 + triangle2:\n";   (triangle1 + triangle2).Display();
+    cout << "\ttriangle1 += triangle2;\n";  triangle1 += triangle2;
+    cout << "\ttriangle1:\n";       triangle1.Display();
+    float S = triangle1.S();
+    cout << "\ttriangle1.S() = " << S << endl;
     return 0;
 }
